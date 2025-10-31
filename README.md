@@ -1,4 +1,7 @@
 # CENG442-Assignment1
+Barış Alimir Ünal
+Ahmet Gürkan Gönül 
+Yunus Emre Cincil
 
 README.md
 1) Data & Goal
