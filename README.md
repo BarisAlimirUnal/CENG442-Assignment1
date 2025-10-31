@@ -13,28 +13,26 @@ Yunus Emre Cincil
 
 Text is normalized by:
 
-Azerbaijani-aware lowercase (İ/ı rules)
+-Azerbaijani-aware lowercase (İ/ı rules)
 
-Remove HTML, URLs, emails, phone numbers
+-Removing HTML, URLs, emails, phone numbers
 
-Replace emojis → positive/negative tags
+-Replacing emojis with positive/negative tags
 
-Tokenize and compress repeated characters
+-Tokenizing and compressing repeated characters
 
-Slang normalization (slm → salam, cox → çox)
+-Slang normalization (slm - salam, cox - çox)
 
-Mark negation for ~3 tokens (yaxşı_NEG)
+-Dropping empty, whitespace only, duplicate rows
 
-Drop empty, whitespace-only, duplicate rows
+-Converting numbers to <NUM>
 
-Convert numbers to <NUM>
+-Keeping one word sentiment values only
 
-Keep one word sentiment values only
-
-Before → After examples:
+Before After examples:
 
 Raw text	Cleaned
-İnanılmaz məhsul!!! Çox yaxşı!!!	inanılmaz məhsul çox yaxşı
+İnanılmaz məhsul!!! Çox yaxşı!!!	===> inanılmaz məhsul çox yaxşı
 Bu çox baha deyil	bu çox baha deyil baha_NEG
 😂😂 Superr məhsul aldım 5 ulduz	EMO_POS EMO_POS super məhsul aldım <STARS_5>
 Qiymet 50 azn	qiymet <NUM> <PRICE>
