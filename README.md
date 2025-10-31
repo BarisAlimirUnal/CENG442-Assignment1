@@ -6,8 +6,8 @@ Ahmet Gürkan Gönül
 Yunus Emre Cincil
 
 
-1) Data & Goal
-We work with 5 Azerbaijani sentiment datasets. Each dataset contains text and a sentiment label. We clean Azerbaijani text, keep semantic signals (negation, emojis, price info, ratings), detect domain type, build domain-tagged corpus, train Word2Vec & FastText, and compare them. We use neutral because it sits between positive and negative. Value 0.5 keeps middle meaning and lets the model learn a smooth sentiment scale instead of forcing binary.
+1) Data & Goal   
+ We work with 5 Azerbaijani sentiment datasets. Each dataset contains text and a sentiment label. We clean Azerbaijani text, keep semantic signals (negation, emojis, price info, ratings), detect domain type, build domain-tagged corpus, train Word2Vec & FastText, and compare them. We use neutral because it sits between positive and negative. Value 0.5 keeps middle meaning and lets the model learn a smooth sentiment scale instead of forcing binary.
 
 2) Preprocessing
 
