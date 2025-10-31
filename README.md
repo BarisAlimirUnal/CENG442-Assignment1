@@ -33,10 +33,13 @@ Before After examples:
 
 Raw text	Cleaned
 İnanılmaz məhsul!!! Çox yaxşı!!!	===> inanılmaz məhsul çox yaxşı
-Bu çox baha deyil	bu çox baha deyil baha_NEG
-😂😂 Superr məhsul aldım 5 ulduz	EMO_POS EMO_POS super məhsul aldım <STARS_5>
-Qiymet 50 azn	qiymet <NUM> <PRICE>
-RT @user: Salam millet!!	rt USER salam millet
+
+😂😂 Superr məhsul aldım 5 ulduz	===> EMO_POS EMO_POS super məhsul aldım <STARS_5>
+
+Qiymet 50 azn	===> qiymet <NUM> <PRICE>
+
+RT @user: Salam millet!! ===>	rt USER salam millet
+
 3) Mini Challenges & Observations
 
 Azerbaijani lowercase
