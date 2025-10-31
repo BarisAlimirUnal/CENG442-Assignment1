@@ -109,6 +109,8 @@ Run command
 
 python pipeline.py --in-dir . --out-dir output --train-embeddings --compare --epochs 12 --min-count 2
 
+put all 5 excel files int the same folder if the code doesn't create one create outputs/embeddings folders
+
 _____________________________________________________________________________________________________
 
 7) Conclusion
