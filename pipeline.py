@@ -1,6 +1,4 @@
-# pipeline.py
-# CENG442 – End-to-end pipeline: 2col + corpus + (opt) w2v/ft + comparison
-
+# we reformatted the code a little bit so all the methods are in the same code
 import re, html, unicodedata, argparse, logging, random, sys
 from pathlib import Path
 import pandas as pd
@@ -18,7 +16,6 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 RND_SEED = 42
 random.seed(RND_SEED); np.random.seed(RND_SEED)
 
-# ---------- Regex & helpers (PDF tarzı) ----------
 HTML_TAG_RE = re.compile(r"<[^>]+>")
 URL_RE      = re.compile(r"(https?://\S+|www\.\S+)", re.I)
 EMAIL_RE    = re.compile(r"\b[\w\.-]+@[\w\.-]+\.\w+\b", re.I)
@@ -33,7 +30,6 @@ EMO_MAP     = {"🙂":"EMO_POS","😀":"EMO_POS","😍":"EMO_POS","😊":"EMO_PO
 SLANG_MAP   = {"slm":"salam","tmm":"tamam","sagol":"sağol","cox":"çox","yaxsi":"yaxşı"}
 NEGATORS    = {"yox","deyil","heç","qətiyyən","yoxdur"}
 
-# Domain hints (kısa, dengeli)
 NEWS_HINTS = re.compile(
     r"\b(apa|trend|azertac|reuters|bloomberg|bbc|report|haqqin|day\.az|minval|aa|dha|xeber|xəbər|agentliyi)\b",
     re.I
@@ -117,7 +113,6 @@ def map_sentiment_value(v, scheme:str):
     if s in {"neg","negative","0","mənfi","bad","neqativ"}: return 0.0
     return None
 
-# ---------- Preprocess ----------
 def process_file(in_path, text_col, label_col, scheme, out_two_col_path, remove_stopwords=False):
     df = pd.read_excel(in_path, engine="openpyxl")
     for c in ("Unnamed: 0","index"):
@@ -169,7 +164,6 @@ def build_corpus_txt(input_files, text_cols, out_txt):
     logging.info(f"[OK] corpus -> {out_txt} (lines={len(lines)})")
     return str(out_txt)
 
-# ---------- Train (optional) ----------
 def train_embeddings(two_col_files, w2v_out, ft_out, vector_size=300, window=5, min_count=3, epochs=10, sg=1):
     if Word2Vec is None or FastText is None:
         raise RuntimeError("gensim bulunamadı. `pip install gensim`")
@@ -185,7 +179,6 @@ def train_embeddings(two_col_files, w2v_out, ft_out, vector_size=300, window=5, 
     ft.save(ft_out); logging.info(f"[EMB] FT  -> {ft_out}")
     return w2v_out, ft_out
 
-# ---------- Compare (optional) ----------
 def lexical_coverage(model, tokens):
     vocab = model.wv.key_to_index
     return sum(1 for t in tokens if t in vocab) / max(1, len(tokens))
@@ -224,7 +217,6 @@ def compare_models(w2v_path, ft_path, two_col_files):
         logging.info(f"[CMP] W2V NN('{w}') -> {neighbors(w2v,w)}")
         logging.info(f"[CMP]  FT NN('{w}') -> {neighbors(ft, w)}")
 
-# ---------- CLI ----------
 def main():
     ap = argparse.ArgumentParser(description="CENG442 pipeline: preprocess + corpus + (opt) train + compare")
     ap.add_argument("--in-dir", type=str, default=".", help="Input dir with XLSX")
@@ -250,7 +242,6 @@ def main():
         ("merged_dataset_CSV__1_.xlsx",   "text", "labels",    "binary"),
     ]
 
-    # 1) Preprocess → 2col
     two_col_files = []
     for fname, tcol, lcol, scheme in CFG:
         in_path = in_dir / fname
@@ -267,17 +258,15 @@ def main():
         logging.error("No two-column outputs produced. Exiting.")
         sys.exit(1)
 
-    # 2) Corpus
     input_files = [str((in_dir / c[0]).resolve()) for c in CFG if (in_dir / c[0]).exists()]
     text_cols   = [c[1] for c in CFG if (in_dir / c[0]).exists()]
     build_corpus_txt(input_files, text_cols, out_txt=str((out_dir / "corpus_all.txt").resolve()))
 
-    # 3) Train (optional)
     if args.train_embeddings:
         w2v_out = str((out_dir / "embeddings/word2vec.model").resolve())
         ft_out  = str((out_dir / "embeddings/fasttext.model").resolve())
         train_embeddings(two_col_files, w2v_out, ft_out, vector_size=300, window=5, min_count=args.min_count, epochs=args.epochs, sg=1)
-        # 4) Compare (optional)
+        
         if args.compare:
             compare_models(w2v_out, ft_out, two_col_files)
     else:
@@ -285,3 +274,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
