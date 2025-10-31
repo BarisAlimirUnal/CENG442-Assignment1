@@ -1,9 +1,11 @@
 # CENG442-Assignment1
 Barış Alimir Ünal
-Ahmet Gürkan Gönül 
+
+Ahmet Gürkan Gönül
+
 Yunus Emre Cincil
 
-README.md
+
 1) Data & Goal
 
 We work with 5 Azerbaijani sentiment datasets (train/test/labeled/merged).
